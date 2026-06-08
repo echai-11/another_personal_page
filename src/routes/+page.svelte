@@ -2,14 +2,22 @@
   import { onMount } from 'svelte';
   import MusicPlayer from './MusicPlayer.svelte';
   import Polaroid from './Polaroid.svelte';
+  import Loader from './Loader.svelte';
 
   const logoFrames = ['/cat_eyes_open.png', '/cat_half_closed.png', '/cat_sleeping.png'];
   let logoFrame = $state(0);
   let logoInterval: ReturnType<typeof setInterval> | undefined;
   let isBlinking = $state(false);
+  let loading = $state(true);
 
   onMount(() => {
     logoFrames.forEach(src => { const img = new Image(); img.src = src; });
+
+    if (document.readyState === 'complete') {
+      loading = false;
+    } else {
+      window.addEventListener('load', () => { loading = false; }, { once: true });
+    }
   });
 
   function startBlink() {
@@ -38,6 +46,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Lacquer&display=swap" rel="stylesheet">
 </svelte:head>
+
+{#if loading}
+  <Loader />
+{/if}
 
 <div class="page">
   <div class="social-icons">
@@ -72,7 +84,7 @@
 </div>
 
 <style>
-  :global(body) {
+:global(body) {
     margin: 0;
     min-height: 100vh;
     background-image: url('/web_background.png');
