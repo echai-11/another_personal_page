@@ -265,66 +265,24 @@
     gap: 14px;
   }
 
-  .play-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2.5px solid #4a4030;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .play-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     flex-shrink: 0;
-    cursor: pointer;
-  }
-
-  .play-triangle {
-    width: 0;
-    height: 0;
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
-    border-left: 15px solid #4a4030;
-    margin-left: 4px;
-  }
-
-  .pause-bars {
     display: flex;
-    gap: 4px;
-    align-items: center;
   }
 
-  .pause-bar {
-    width: 3px;
-    height: 16px;
-    background: #4a4030;
-    border-radius: 1px;
-  }
-
-  .scrubber {
+  .scrubber-wrap {
     flex: 1;
-    height: 2px;
-    background: #c8b89a;
-    border-radius: 2px;
-    position: relative;
     cursor: pointer;
+    padding: 6px 0;
   }
 
-  .scrubber-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: #4a4030;
-    border-radius: 2px;
-  }
-
-  .scrubber-thumb {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 11px;
-    height: 11px;
-    background: #4a4030;
-    border-radius: 50%;
+  .scrubber-wrap svg {
+    display: block;
+    overflow: visible;
   }
 
   /* Bottom Text */
@@ -340,6 +298,16 @@
   }
 
 </style>
+
+<!-- SVG filter for hand-drawn effect -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <filter id="sketchy" x="-5%" y="-30%" width="110%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="8" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 
 <!-- Hidden YouTube player -->
 <div class="yt-hidden">
@@ -384,19 +352,23 @@
       <p class="player-song">look to windward // sleep token</p>
     </div>
     <div class="player-row">
-      <div class="play-circle" onclick={togglePlay} role="button" tabindex="0" onkeydown={(e) => e.key === 'Enter' && togglePlay()}>
-        {#if isPlaying}
-          <div class="pause-bars">
-            <div class="pause-bar"></div>
-            <div class="pause-bar"></div>
-          </div>
-        {:else}
-          <div class="play-triangle"></div>
-        {/if}
-      </div>
-      <div class="scrubber" onclick={seek} onkeydown={(e: KeyboardEvent) => { if (e.key === 'ArrowRight') { currentTime = Math.min(duration, currentTime + 5); player?.seekTo(currentTime, true); } else if (e.key === 'ArrowLeft') { currentTime = Math.max(0, currentTime - 5); player?.seekTo(currentTime, true); } }} role="slider" tabindex="0" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
-        <div class="scrubber-fill" style="width: {progress}%"></div>
-        <div class="scrubber-thumb" style="left: {progress}%"></div>
+      <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none" style="filter:url(#sketchy)">
+          <circle cx="23" cy="23" r="19" stroke="#4a4030" stroke-width="2.2"/>
+          {#if isPlaying}
+            <rect x="16" y="14" width="5" height="18" rx="1" fill="#4a4030"/>
+            <rect x="25" y="14" width="5" height="18" rx="1" fill="#4a4030"/>
+          {:else}
+            <polygon points="18,13 37,23 18,33" fill="#4a4030"/>
+          {/if}
+        </svg>
+      </button>
+      <div class="scrubber-wrap" onclick={seek} onkeydown={(e: KeyboardEvent) => { if (e.key === 'ArrowRight') { currentTime = Math.min(duration, currentTime + 5); player?.seekTo(currentTime, true); } else if (e.key === 'ArrowLeft') { currentTime = Math.max(0, currentTime - 5); player?.seekTo(currentTime, true); } }} role="slider" tabindex="0" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+        <svg width="100%" height="18" style="filter:url(#sketchy)">
+          <line x1="0" y1="9" x2="100%" y2="9" stroke="#c8b89a" stroke-width="3" stroke-linecap="round"/>
+          <line x1="0" y1="9" x2="{progress}%" y2="9" stroke="#4a4030" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="{progress}%" cy="9" r="6" fill="#4a4030"/>
+        </svg>
       </div>
     </div>
   </div>
