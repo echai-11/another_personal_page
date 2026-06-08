@@ -384,7 +384,7 @@
     .social-icons {
       position: relative;
       left: auto; top: auto;
-      margin-top: 20px;
+      margin-top: -27px;
       flex-direction: row;
       justify-content: center;
       align-items: flex-start;
@@ -428,17 +428,20 @@
   }
   /* ── 400px ── */
   @media (max-width: 400px) {
+        .page {gap:3vh;}
+        .social-icons {margin-top:-14px;}
     .music-player { left: auto; width: 70vw; }
     .polaroid-photo-container { width: min(200px, 62vw); height: min(230px, 71.5vw); }
     .polaroid-photo { width: min(238px, 74vw); }
   }
 
   /* ── 320px ── */
-  @media (max-width: 320px) {
+  @media (max-width: 325px) {
+
 
     .logo-section img { width: 50vw; }
     .social-icons {gap:15px;}
-    .social-icons img { width: 40px; height: 40px; }
+    .social-icons img { width: 55px; height: 55px; }
   }
 
 
@@ -462,16 +465,16 @@
 <div class="page">
   <!-- Social Icons -->
   <div class="social-icons">
-    <a href="https://linkedin.com/in/lizziechai" target="_blank" rel="noopener noreferrer">
+    <a href="https://linkedin.com/in/lizziechai11" target="_blank" rel="noopener noreferrer">
       <img src="/linkedin_icon.png" alt="LinkedIn">
     </a>
-    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+    <a href="https://instagram.com/lizziech41" target="_blank" rel="noopener noreferrer">
       <img src="/instagram_icon.png" alt="Instagram">
     </a>
-    <a href="https://github.com/lizziechai" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/echai-11" target="_blank" rel="noopener noreferrer">
       <img src="/github_icon.png" alt="GitHub">
     </a>
-    <a href="mailto:lizzie.chai@gmail.com">
+    <a href="mailto:contact@lizziechai.com">
       <img src="/gmail_icon.png" alt="Email">
     </a>
   </div>
