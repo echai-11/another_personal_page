@@ -75,6 +75,36 @@
   }
 
   const progress = $derived(duration ? (currentTime / duration) * 100 : 0);
+
+  const logoFrames = ['/cat_eyes_open.png', '/cat_half_closed.png', '/cat_sleeping.png'];
+  let logoFrame = $state(0);
+  let logoInterval: ReturnType<typeof setInterval> | undefined;
+
+  onMount(() => {
+    logoFrames.forEach(src => { const img = new Image(); img.src = src; });
+  });
+
+  let isBlinking = $state(false);
+
+  function startBlink() {
+    clearInterval(logoInterval);
+    isBlinking = true;
+    let i = 0;
+    logoInterval = setInterval(() => {
+      i++;
+      logoFrame = i % logoFrames.length;
+      if (i >= logoFrames.length - 1) {
+        clearInterval(logoInterval);
+        setTimeout(() => { logoFrame = 0; isBlinking = false; }, 200);
+      }
+    }, 150);
+  }
+
+  function stopBlink() {
+    clearInterval(logoInterval);
+    logoFrame = 0;
+    isBlinking = false;
+  }
 </script>
 
 <svelte:head>
@@ -176,11 +206,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor:pointer;
   }
 
   .logo-section img {
     width: 250px;
-    height: auto;
+    height: 250px;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+  }
+
+  @keyframes logo-wobble {
+    0%   { transform: rotate(0deg); }
+    25%  { transform: rotate(-2.5deg); }
+    50%  { transform: rotate(0deg); }
+    75%  { transform: rotate(2.5deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  .logo-section img.wobbling {
+    animation: logo-wobble 0.5s ease-in-out infinite;
   }
 
   .name-text {
@@ -338,7 +384,7 @@
     .social-icons          { left: 10%; top: 16.4%; gap: 2vh; }
     .social-icons img      { width: 80px; height: 80px; }
     .logo-section          { left: 33%; top: 19%; }
-    .logo-section img      { width: 240px; }
+    .logo-section img { width: 240px;  height: 240px; }
     .name-text             { font-size: 25px; letter-spacing: 0}
     .polaroid-wrapper      { right: 5%; top: 29.8%; }
     .polaroid-photo-container { width: 212px; height: 246px; }
@@ -352,7 +398,7 @@
     .social-icons          { left: 10%; top: 16%; }
     .social-icons img      { width: 75px; height: 75px; }
     .logo-section          { left: 33%; top: 19%; }
-    .logo-section img      { width: 210px; }
+    .logo-section img { width: 210px;  height: 210px; }
     .name-text             { font-size: 23px; }
     .polaroid-wrapper      { right: 4%; top: 29%; }
     .polaroid-photo-container { width: 190px; height: 218px; }
@@ -389,7 +435,7 @@
     .polaroid-wrapper { order: 3; }
     .music-player { order: 4; }
     .bottom-text { order: 5; }
-    .logo-section img { width: 180px; }
+    .logo-section img { width: 180px;  height: 180px; }
     .name-text { font-size: 22px; }
 
     .social-icons {
@@ -448,7 +494,7 @@
   @media (max-width: 325px) {
 
 
-    .logo-section img { width: 150px; }
+    .logo-section img { width: 150px;  height: 150px; }
     .social-icons {gap:15px;}
     .social-icons img { width: 55px; height: 55px; }
     .bottom-text {font-size:12px;}
@@ -490,8 +536,8 @@
   </div>
 
   <!-- Logo + Name -->
-  <div class="logo-section">
-    <img src="/LizzieChaiLogo.png" alt="Lizzie Chai Logo">
+  <div class="logo-section" onmouseenter={startBlink} onmouseleave={stopBlink}>
+    <img src={logoFrames[logoFrame]} alt="Lizzie Chai Logo" class:wobbling={isBlinking}>
     <span class="name-text covered-by-your-grace-regular">LIZZIE CHAI</span>
   </div>
 
