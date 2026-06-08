@@ -177,7 +177,6 @@
     color: #1a1a1a;
     letter-spacing: -1px;
     line-height: 1;
-    margin-top: 4px;
     text-align:right;
     align-self:end;
   }
@@ -329,7 +328,7 @@
     .social-icons img      { width: 80px; height: 80px; }
     .logo-section          { left: 33%; top: 19%; }
     .logo-section img      { width: 240px; }
-    .name-text             { font-size: 25px; letter-spacing: 0.3px}
+    .name-text             { font-size: 25px; letter-spacing: 0}
     .polaroid-wrapper      { right: 5%; top: 29.8%; }
     .polaroid-photo-container { width: 212px; height: 246px; }
     .polaroid-photo        { width: 252px; }
@@ -353,7 +352,7 @@
 
   /* ── 600px — column layout ── */
   @media (max-width: 679px) {
-    :global(body) { overflow-y: auto; overflow-x: hidden; }
+    :global(body) { overflow-y: auto; overflow-x: auto; }
 
     .page {
       display: flex;
@@ -361,16 +360,17 @@
       align-items: center;
       height: auto;
       min-height: 100vh;
+      min-width: 300px;
       width: 100%;
       overflow: visible;
-      padding: 5vh auto 2vh auto;
+      padding: 5vh 20px 2vh;
       gap: 6vh;
       box-sizing: border-box;
     }
 
     .logo-section {
       position: relative;
-      left: auto; top: 50px;
+      left: auto; top:auto;
       order: 1;
     }
 
@@ -384,23 +384,25 @@
     .social-icons {
       position: relative;
       left: auto; top: auto;
-       margin-top:20px;
+      margin-top: 20px;
       flex-direction: row;
       justify-content: center;
+      align-items: flex-start;
       width: 100%;
-      gap: 5vw; 
+      gap: 5vw;
     }
     .social-icons img { width: 65px; height: 65px; }
-    .social-icons a:first-child,
-    .social-icons a:nth-child(3),
-    .social-icons a:nth-child(4) { margin-left: 0; }
+    .social-icons a:first-child { margin-left: 0; margin-top: 0px; }
+    .social-icons a:nth-child(2) { margin-top: 18px; }
+    .social-icons a:nth-child(3) { margin-left: 0; margin-top: 8px; }
+    .social-icons a:nth-child(4) { margin-left: 0; margin-top: 15px; }
 
     .polaroid-wrapper {
       position: relative;
      top: auto;
       transform: rotate(4deg);
       right: 15px;
-      padding-top: 16px;
+      padding-top: 10px;
     }
     .polaroid-photo-container { width: 200px; height: 230px; }
     .polaroid-photo { width: 238px; }
@@ -409,6 +411,7 @@
       position: relative;
       bottom: auto; left:10%;
       width: 280px;
+      min-width:210px;
       margin-top:36px;
       align-self:start;
     }
@@ -423,21 +426,21 @@
         align-self:end;
     }
   }
- /* ── 375px ── */
-   @media (max-width: 400px){
-.music-player{
- width:70vw;
-   }
+  /* ── 400px ── */
+  @media (max-width: 400px) {
+    .music-player { left: auto; width: 70vw; }
+    .polaroid-photo-container { width: min(200px, 62vw); height: min(230px, 71.5vw); }
+    .polaroid-photo { width: min(238px, 74vw); }
+  }
 
-}
   /* ── 320px ── */
   @media (max-width: 320px) {
-  .logo-section img {
-    width:170px;
+
+    .logo-section img { width: 50vw; }
+    .social-icons {gap:15px;}
+    .social-icons img { width: 40px; height: 40px; }
   }
-    .social-icons img { width: 50px; height: 50px; }
-   
-  }
+
 
 </style>
 
