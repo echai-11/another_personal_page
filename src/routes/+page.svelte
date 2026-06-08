@@ -185,8 +185,8 @@
   /* Polaroid */
   .polaroid-wrapper {
     position: absolute;
-    right: 13.2%;
-    top: 9.8%;
+    right: 15.2%;
+    top: 23.8%;
     transform: rotate(11.4deg);
   }
 
@@ -273,7 +273,7 @@
     font-size: 13px;
     color:#040404;
     margin: 0;
-    text-transform: lowercase;
+    background-color:#ffc300;
   }
 
 
@@ -307,12 +307,136 @@
   .bottom-text {
     position: absolute;
     bottom: 2vh;
-    right: 5vw;
+    right: 2vw;
     font-size: 22px;
     color: #2a2a2a;
   }
   .bottom-text p {
     margin:1px;
+  }
+
+  /* ── 1200px ── */
+  @media (max-width: 1200px) {
+    .social-icons     { left: 10%; top: 13.4%; }
+    .logo-section     { left: 33%; top: 16%;   }
+    .polaroid-wrapper { right: 10%; top: 26.8%; }
+    .music-player     { left: 38%; }
+  }
+
+  /* ── 1000px ── */
+  @media (max-width: 1000px) {
+    .social-icons          { left: 10%; top: 16.4%; gap: 2vh; }
+    .social-icons img      { width: 80px; height: 80px; }
+    .logo-section          { left: 33%; top: 19%; }
+    .logo-section img      { width: 240px; }
+    .name-text             { font-size: 25px; letter-spacing: 0.3px}
+    .polaroid-wrapper      { right: 5%; top: 29.8%; }
+    .polaroid-photo-container { width: 212px; height: 246px; }
+    .polaroid-photo        { width: 252px; }
+    .music-player          { left: 34%; bottom: 10vh; width: 275px; }
+    .bottom-text           { font-size: 20px; }
+  }
+
+  /* ── 865px ── */
+  @media (max-width: 865px) {
+    .social-icons          { left: 10%; top: 16%; }
+    .social-icons img      { width: 75px; height: 75px; }
+    .logo-section          { left: 33%; top: 19%; }
+    .logo-section img      { width: 210px; }
+    .name-text             { font-size: 23px; }
+    .polaroid-wrapper      { right: 4%; top: 29%; }
+    .polaroid-photo-container { width: 190px; height: 218px; }
+    .polaroid-photo        { width: 226px; }
+    .music-player          { width: 260px; }
+  }
+
+
+  /* ── 600px — column layout ── */
+  @media (max-width: 679px) {
+    :global(body) { overflow-y: auto; overflow-x: hidden; }
+
+    .page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      min-height: 100vh;
+      width: 100%;
+      overflow: visible;
+      padding: 5vh auto 2vh auto;
+      gap: 6vh;
+      box-sizing: border-box;
+    }
+
+    .logo-section {
+      position: relative;
+      left: auto; top: 50px;
+      order: 1;
+    }
+
+    .social-icons { order: 2; }
+    .polaroid-wrapper { order: 3; }
+    .music-player { order: 4; }
+    .bottom-text { order: 5; }
+    .logo-section img { width: 180px; }
+    .name-text { font-size: 22px; }
+
+    .social-icons {
+      position: relative;
+      left: auto; top: auto;
+       margin-top:20px;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      gap: 5vw; 
+    }
+    .social-icons img { width: 65px; height: 65px; }
+    .social-icons a:first-child,
+    .social-icons a:nth-child(3),
+    .social-icons a:nth-child(4) { margin-left: 0; }
+
+    .polaroid-wrapper {
+      position: relative;
+     top: auto;
+      transform: rotate(4deg);
+      right: 15px;
+      padding-top: 16px;
+    }
+    .polaroid-photo-container { width: 200px; height: 230px; }
+    .polaroid-photo { width: 238px; }
+
+    .music-player {
+      position: relative;
+      bottom: auto; left:10%;
+      width: 280px;
+      margin-top:36px;
+      align-self:start;
+    }
+
+    .bottom-text {
+      position: relative;
+      bottom: 0px; right: 5vw;
+      text-align: left;
+      font-size: 16px;
+      padding-top:20px;
+      padding-bottom:10px;
+        align-self:end;
+    }
+  }
+ /* ── 375px ── */
+   @media (max-width: 400px){
+.music-player{
+ width:70vw;
+   }
+
+}
+  /* ── 320px ── */
+  @media (max-width: 320px) {
+  .logo-section img {
+    width:170px;
+  }
+    .social-icons img { width: 50px; height: 50px; }
+   
   }
 
 </style>
@@ -374,7 +498,7 @@
   <!-- Music Player -->
   <div class="music-player">
     <div class="player-track-info">
-      <p class="player-song">look to windward // sleep token</p>
+      <span class="player-song">look to windward // sleep token</span>
     </div>
     <div class="player-row">
       <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
