@@ -442,8 +442,6 @@
         .page {gap:3vh;}
         .social-icons {margin-top:-14px;}
     .music-player { left: auto; width: 70vw; }
-    .polaroid-photo-container { width: min(200px, 62vw); height: min(230px, 71.5vw); }
-    .polaroid-photo { width: min(238px, 74vw); }
   }
 
   /* ── 320px ── */
