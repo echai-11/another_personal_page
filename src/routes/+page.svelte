@@ -119,14 +119,14 @@
 
   /* Social Icons */
   .social-icons {
-    position: fixed;
-    left: 80px;
-    margin-top:80px;
+    position: absolute;
+    left: 10%;
+    top: 10.4%;
     display: flex;
     flex-direction: column;
     gap: 3vh;
     align-items: center;
-    width:200px;
+    width: 14.6vw;
   }
 
   .social-icons img {
@@ -158,13 +158,13 @@
 
   /* Logo + Name */
   .logo-section {
-    transform:rotate(-13.7deg);
+    position: absolute;
+    left: 33.3%;
+    top: 13%;
+    transform: rotate(-13.7deg);
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top:100px;
-    margin-left:400px;
-    position:fixed;
   }
 
   .logo-section img {
@@ -184,11 +184,10 @@
 
   /* Polaroid */
   .polaroid-wrapper {
-   position: fixed;
-  right: 180px;
-  top: 75px;
+    position: absolute;
+    right: 13.2%;
+    top: 9.8%;
     transform: rotate(11.4deg);
-   
   }
 
   .polaroid-photo-container {
@@ -247,19 +246,22 @@
   .music-player {
     position: absolute;
     bottom: 9vh;
-    left: 33%;
-    background: #f5e8c8;
+    left: 41%;
+    background: transparent;
     border-radius: 18px;
     padding: 14px 20px 20px 20px;
     width: 320px;
-    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
+    transform: rotate(-1.6deg);
   }
 
-  .player-dots {
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-    margin-bottom: 10px;
+  .music-player::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2.5px solid #4a4030;
+    border-radius: 18px;
+    filter: url(#sketchy);
+    pointer-events: none;
   }
 
   .player-track-info {
@@ -269,24 +271,11 @@
   .player-song {
     font-family: "Lacquer", system-ui;
     font-size: 13px;
-    color: #3a2e20;
+    color:#040404;
     margin: 0;
     text-transform: lowercase;
   }
 
-  .player-artist {
-    font-size: 11px;
-    color: #7a6a58;
-    margin: 2px 0 0 0;
-    text-transform: lowercase;
-  }
-
-  .player-dot {
-    width: 7px;
-    height: 7px;
-    background: #7a6a58;
-    border-radius: 50%;
-  }
 
   .player-row {
     display: flex;
@@ -317,13 +306,13 @@
   /* Bottom Text */
   .bottom-text {
     position: absolute;
-    bottom: 9vh;
+    bottom: 2vh;
     right: 5vw;
     font-size: 22px;
     color: #2a2a2a;
   }
   .bottom-text p {
-    margin:0;
+    margin:1px;
   }
 
 </style>
@@ -390,20 +379,20 @@
     <div class="player-row">
       <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
         <svg width="46" height="46" viewBox="0 0 46 46" fill="none" style="filter:url(#sketchy)">
-          <circle cx="23" cy="23" r="19" stroke="#4a4030" stroke-width="2.2"/>
+          <circle cx="23" cy="23" r="19" stroke="#040404" stroke-width="2.2"/>
           {#if isPlaying}
-            <rect x="16" y="14" width="5" height="18" rx="1" fill="#4a4030"/>
-            <rect x="25" y="14" width="5" height="18" rx="1" fill="#4a4030"/>
+            <rect x="16" y="14" width="5" height="18" rx="1" fill="#040404"/>
+            <rect x="25" y="14" width="5" height="18" rx="1" fill="#040404"/>
           {:else}
-            <polygon points="18,13 37,23 18,33" fill="#4a4030"/>
+            <polygon points="18,13 37,23 18,33" fill="#040404"/>
           {/if}
         </svg>
       </button>
       <div class="scrubber-wrap" onclick={seek} onkeydown={(e: KeyboardEvent) => { if (e.key === 'ArrowRight') { currentTime = Math.min(duration, currentTime + 5); player?.seekTo(currentTime, true); } else if (e.key === 'ArrowLeft') { currentTime = Math.max(0, currentTime - 5); player?.seekTo(currentTime, true); } }} role="slider" tabindex="0" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
         <svg width="100%" height="18" style="filter:url(#sketchy)">
-          <line x1="0" y1="9" x2="100%" y2="9" stroke="#c8b89a" stroke-width="3" stroke-linecap="round"/>
-          <line x1="0" y1="9" x2="{progress}%" y2="9" stroke="#4a4030" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="{progress}%" cy="9" r="6" fill="#4a4030"/>
+          <line x1="0" y1="9" x2="100%" y2="9" stroke="#040404" stroke-width="3" stroke-linecap="round"/>
+          <line x1="0" y1="9" x2="{progress}%" y2="9" stroke="#040404" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="{progress}%" cy="9" r="6" fill="#0A66C2"/>
         </svg>
       </div>
     </div>
