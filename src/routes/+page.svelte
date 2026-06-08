@@ -152,8 +152,19 @@
   }
 
 
-  .social-icons a:hover img {
-    transform: scale(1.08);
+  @keyframes wobble {
+    0%   { transform: scale(1) rotate(0deg); }
+    20%  { transform: scale(1.12) rotate(-7deg); }
+    40%  { transform: scale(1.10) rotate(6deg); }
+    60%  { transform: scale(1.11) rotate(-4deg); }
+    80%  { transform: scale(1.09) rotate(2deg); }
+    100% { transform: scale(1.08) rotate(0deg); }
+  }
+
+  @media (hover: hover) {
+    .social-icons a:hover img {
+      animation: wobble 0.5s ease forwards;
+    }
   }
 
   /* Logo + Name */
@@ -439,9 +450,10 @@
   @media (max-width: 325px) {
 
 
-    .logo-section img { width: 50vw; }
+    .logo-section img { width: 150px; }
     .social-icons {gap:15px;}
     .social-icons img { width: 55px; height: 55px; }
+    .bottom-text {font-size:12px;}
   }
 
 
