@@ -5,6 +5,7 @@
   let isPlaying = $state(false);
   let currentTime = $state(0);
   let duration = $state(0);
+  let flipped = $state(false);
   let progressInterval: ReturnType<typeof setInterval> | undefined;
 
   onMount(() => {
@@ -187,19 +188,47 @@
   right: 180px;
   top: 75px;
     transform: rotate(11.4deg);
+   
   }
 
   .polaroid-photo-container {
     width: 230px;
     height: 264px;
+    perspective: 800px;
+  }
+
+  .flip-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s ease;
+    cursor: pointer;
+  }
+
+  .flip-card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front,
+  .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     overflow: hidden;
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
+     box-shadow: 6px 8px 24px rgba(0, 0, 0, 0.25), 2px 3px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .flip-back {
+    transform: rotateY(180deg);
   }
 
   .polaroid-photo {
-    width:272px;
+    width: 272px;
     height: auto;
     object-fit: cover;
     flex-shrink: 0;
@@ -341,7 +370,14 @@
   <div class="polaroid-wrapper">
     <div class="polaroid">
       <div class="polaroid-photo-container">
-        <img src="/LizzieAndDodo1.png" alt="Lizzie and Dodo" class="polaroid-photo">
+        <div class="flip-card" class:flipped onclick={() => flipped = !flipped} role="button" tabindex="0" onkeydown={(e) => e.key === 'Enter' && (flipped = !flipped)}>
+          <div class="flip-front">
+            <img src="/LizzieAndDodo1.png" alt="Lizzie and Dodo" class="polaroid-photo">
+          </div>
+          <div class="flip-back">
+            <img src="/LizzieAndDodo2.png" alt="Lizzie and Dodo" class="polaroid-photo">
+          </div>
+        </div>
       </div>
     </div>
   </div>
