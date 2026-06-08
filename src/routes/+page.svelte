@@ -1,3 +1,81 @@
+<script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
+
+  let player: any = null;
+  let isPlaying = $state(false);
+  let currentTime = $state(0);
+  let duration = $state(0);
+  let progressInterval: ReturnType<typeof setInterval> | undefined;
+
+  onMount(() => {
+    function initPlayer() {
+      player = new (window as any).YT.Player('yt-player', {
+        videoId: 'Qw0bebAzsYc',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1,
+        },
+        events: {
+          onReady: (e: any) => { duration = e.target.getDuration(); },
+          onStateChange: onStateChange,
+        }
+      });
+    }
+
+    if ((window as any).YT?.Player) {
+      initPlayer();
+    } else {
+      (window as any).onYouTubeIframeAPIReady = initPlayer;
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+      }
+    }
+  });
+
+  onDestroy(() => {
+    clearInterval(progressInterval);
+    player?.destroy();
+    player = null;
+  });
+
+  function onStateChange(event: any) {
+    if (event.data === 1) {
+      isPlaying = true;
+      progressInterval = setInterval(() => {
+        currentTime = player.getCurrentTime();
+        duration = player.getDuration();
+      }, 250);
+    } else {
+      isPlaying = false;
+      clearInterval(progressInterval);
+      if (event.data === 0) currentTime = 0;
+    }
+  }
+
+  function togglePlay() {
+    if (!player) return;
+    isPlaying ? player.pauseVideo() : player.playVideo();
+  }
+
+  function seek(event: MouseEvent) {
+    if (!player || !duration) return;
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    player.seekTo(pct * duration, true);
+    currentTime = pct * duration;
+  }
+
+  const progress = $derived(duration ? (currentTime / duration) * 100 : 0);
+</script>
+
 <svelte:head>
  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -127,6 +205,15 @@
     flex-shrink: 0;
   }
 
+  /* Hidden YouTube player */
+  .yt-hidden {
+    position: fixed;
+    left: -9999px;
+    width: 200px;
+    height: 150px;
+    pointer-events: none;
+  }
+
   /* Music Player */
   .music-player {
     position: absolute;
@@ -143,7 +230,26 @@
     display: flex;
     justify-content: flex-end;
     gap: 5px;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
+  }
+
+  .player-track-info {
+    margin-bottom: 12px;
+  }
+
+  .player-song {
+    font-family: "Lacquer", system-ui;
+    font-size: 13px;
+    color: #3a2e20;
+    margin: 0;
+    text-transform: lowercase;
+  }
+
+  .player-artist {
+    font-size: 11px;
+    color: #7a6a58;
+    margin: 2px 0 0 0;
+    text-transform: lowercase;
   }
 
   .player-dot {
@@ -180,24 +286,45 @@
     margin-left: 4px;
   }
 
+  .pause-bars {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .pause-bar {
+    width: 3px;
+    height: 16px;
+    background: #4a4030;
+    border-radius: 1px;
+  }
+
   .scrubber {
     flex: 1;
     height: 2px;
-    background: #4a4030;
+    background: #c8b89a;
     border-radius: 2px;
     position: relative;
+    cursor: pointer;
+  }
+
+  .scrubber-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #4a4030;
+    border-radius: 2px;
   }
 
   .scrubber-thumb {
     position: absolute;
-    left: 28%;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     width: 11px;
     height: 11px;
     background: #4a4030;
     border-radius: 50%;
-    margin-left: -5.5px;
   }
 
   /* Bottom Text */
@@ -213,6 +340,11 @@
   }
 
 </style>
+
+<!-- Hidden YouTube player -->
+<div class="yt-hidden">
+  <div id="yt-player"></div>
+</div>
 
 <div class="page">
   <!-- Social Icons -->
@@ -248,17 +380,23 @@
 
   <!-- Music Player -->
   <div class="music-player">
-    <div class="player-dots">
-      <div class="player-dot"></div>
-      <div class="player-dot"></div>
-      <div class="player-dot"></div>
+    <div class="player-track-info">
+      <p class="player-song">look to windward // sleep token</p>
     </div>
     <div class="player-row">
-      <div class="play-circle">
-        <div class="play-triangle"></div>
+      <div class="play-circle" onclick={togglePlay} role="button" tabindex="0" onkeydown={(e) => e.key === 'Enter' && togglePlay()}>
+        {#if isPlaying}
+          <div class="pause-bars">
+            <div class="pause-bar"></div>
+            <div class="pause-bar"></div>
+          </div>
+        {:else}
+          <div class="play-triangle"></div>
+        {/if}
       </div>
-      <div class="scrubber">
-        <div class="scrubber-thumb"></div>
+      <div class="scrubber" onclick={seek} onkeydown={(e: KeyboardEvent) => { if (e.key === 'ArrowRight') { currentTime = Math.min(duration, currentTime + 5); player?.seekTo(currentTime, true); } else if (e.key === 'ArrowLeft') { currentTime = Math.max(0, currentTime - 5); player?.seekTo(currentTime, true); } }} role="slider" tabindex="0" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+        <div class="scrubber-fill" style="width: {progress}%"></div>
+        <div class="scrubber-thumb" style="left: {progress}%"></div>
       </div>
     </div>
   </div>
