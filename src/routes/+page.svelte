@@ -371,6 +371,10 @@
     margin:1px;
   }
 
+  .footnote {
+    font-size:14px;
+  }
+
   /* ── 1200px ── */
   @media (max-width: 1200px) {
     .social-icons     { left: 10%; top: 13.4%; }
@@ -482,6 +486,9 @@
       padding-bottom:10px;
         align-self:end;
     }
+     .footnote {
+    font-size:12px;
+  }
   }
   /* ── 400px ── */
   @media (max-width: 400px) {
@@ -585,5 +592,5 @@
   </div>
 
   <!-- Bottom Text -->
-  <div class="bottom-text lacquer-regular"><p>i created this page on</p><p>june 8, 2026</p></div>
+  <div class="bottom-text lacquer-regular"><p>i created this page on</p><p>june 8, 2026</p><p class="footnote">{">> claude helped me ;P"}</p></div>
 </div>
