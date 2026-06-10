@@ -29,7 +29,7 @@
       logoFrame = i % logoFrames.length;
       if (i >= logoFrames.length - 1) {
         clearInterval(logoInterval);
-        setTimeout(() => { logoFrame = 0; isBlinking = false; }, 200);
+        setTimeout(() => { logoFrame = 0; isBlinking = false; }, 50);
       }
     }, 150);
   }
@@ -88,9 +88,9 @@
     margin: 0;
     min-height: 100vh;
     background-image: url('/web_background.png');
-    background-size: 100%;
-    background-position: center;
-    background-repeat: repeat-y;
+    background-size: 1366px auto;
+    background-position: top left;
+    background-repeat: repeat;
     background-attachment: fixed;
     overflow: hidden;
   }
