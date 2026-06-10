@@ -29,7 +29,7 @@
       logoFrame = i % logoFrames.length;
       if (i >= logoFrames.length - 1) {
         clearInterval(logoInterval);
-        setTimeout(() => { logoFrame = 0; isBlinking = false; }, 200);
+        setTimeout(() => { logoFrame = 0; isBlinking = false; }, 50);
       }
     }, 150);
   }
@@ -223,6 +223,9 @@
   }
 
   @media (max-width: 865px) {
+    :global(body) {
+      background-size:180%;
+    }
     .social-icons     { left: 10%; top: 16%; }
     .social-icons img { width: 75px; height: 75px; }
     .logo-section     { left: 33%; top: 19%; }
@@ -231,7 +234,7 @@
   }
 
   @media (max-width: 679px) {
-    :global(body) { overflow-y: auto; overflow-x: auto; }
+    :global(body) { overflow-y: auto; overflow-x: auto; background-size:200%; }
 
     .page {
       display: flex;
@@ -292,7 +295,8 @@
   }
 
   @media (max-width: 400px) {
-    .page         { gap: 3vh; }
+     :global(body) { background-size: 400%;}
+    .page         { gap: 3vh;}
     .social-icons { margin-top: -14px; }
   }
 
