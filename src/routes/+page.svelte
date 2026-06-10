@@ -88,9 +88,9 @@
     margin: 0;
     min-height: 100vh;
     background-image: url('/web_background.png');
-    background-size: 100%;
-    background-position: center;
-    background-repeat: repeat-y;
+    background-size: 1366px auto;
+    background-position: top left;
+    background-repeat: repeat;
     background-attachment: fixed;
     overflow: hidden;
   }
@@ -223,9 +223,6 @@
   }
 
   @media (max-width: 865px) {
-    :global(body) {
-      background-size:180%;
-    }
     .social-icons     { left: 10%; top: 16%; }
     .social-icons img { width: 75px; height: 75px; }
     .logo-section     { left: 33%; top: 19%; }
@@ -234,7 +231,7 @@
   }
 
   @media (max-width: 679px) {
-    :global(body) { overflow-y: auto; overflow-x: auto; background-size:200%; }
+    :global(body) { overflow-y: auto; overflow-x: auto; }
 
     .page {
       display: flex;
@@ -295,8 +292,7 @@
   }
 
   @media (max-width: 400px) {
-     :global(body) { background-size: 400%;}
-    .page         { gap: 3vh;}
+    .page         { gap: 3vh; }
     .social-icons { margin-top: -14px; }
   }
 
