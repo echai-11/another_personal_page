@@ -106,7 +106,7 @@
     <span class="player-song">look to windward // sleep token</span>
   </div>
   <div class="player-row">
-    <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'} disabled={!playerReady}>
+    <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'} disabled={!playerReady} data-gtm-click="music-play">
       <svg width="46" height="46" viewBox="0 0 46 46" fill="none" style="filter:url(#sketchy)">
         <circle cx="23" cy="23" r="19" stroke="#040404" stroke-width="2.2"/>
         {#if !playerReady}

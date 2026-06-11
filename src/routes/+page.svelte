@@ -7,10 +7,10 @@
   const logoFrames = ['/cat_eyes_open.png', '/cat_half_closed.png', '/cat_sleeping.png'] as const;
 
   const socialLinks = [
-    { href: 'https://linkedin.com/in/lizziechai11', src: '/linkedin_icon.png', alt: 'LinkedIn',  external: true  },
-    { href: 'https://instagram.com/lizziech41',     src: '/instagram_icon.png', alt: 'Instagram', external: true  },
-    { href: 'https://github.com/echai-11',          src: '/github_icon.png',    alt: 'GitHub',    external: true  },
-    { href: 'mailto:contact@lizziechai.com',        src: '/gmail_icon.png',     alt: 'Email',     external: false },
+    { href: 'https://linkedin.com/in/lizziechai11', src: '/linkedin_icon.png', alt: 'LinkedIn',  external: true,  track: 'social-linkedin'  },
+    { href: 'https://instagram.com/lizziech41',     src: '/instagram_icon.png', alt: 'Instagram', external: true,  track: 'social-instagram' },
+    { href: 'https://github.com/echai-11',          src: '/github_icon.png',    alt: 'GitHub',    external: true,  track: 'social-github'    },
+    { href: 'mailto:contact@lizziechai.com',        src: '/gmail_icon.png',     alt: 'Email',     external: false, track: 'social-email'     },
   ] as const;
 
   let logoFrame = $state(0);
@@ -61,14 +61,14 @@
 
 <div class="page">
   <div class="social-icons">
-    {#each socialLinks as { href, src, alt, external }}
-      <a {href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>
+    {#each socialLinks as { href, src, alt, external, track }}
+      <a {href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} data-gtm-click={track}>
         <img {src} {alt}>
       </a>
     {/each}
   </div>
 
-  <div class="logo-section" role="img" aria-label="Lizzie Chai logo" onmouseenter={startBlink} onmouseleave={stopBlink}>
+  <div class="logo-section" role="img" aria-label="Lizzie Chai logo" onmouseenter={startBlink} onmouseleave={stopBlink} data-gtm-click="logo">
     <img src={logoFrames[logoFrame]} alt="Lizzie Chai Logo" class:wobbling={isBlinking}>
     <span class="name-text covered-by-your-grace-regular">LIZZIE CHAI</span>
   </div>
