@@ -7,20 +7,19 @@
     <div class="bar bar5"></div>
     <div class="bar bar6"></div>
   </div>
- <div class="loader-text">
-    <p >{">> loading"}</p>
+  <div class="loader-text">
+    <p>{">> loading"}</p>
   </div>
 </div>
- 
 
 <style>
   .loader-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background:#1E1D19;
+    background: #1E1D19;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
@@ -50,7 +49,7 @@
     color: white;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1rem;
-    display:block;
+    display: block;
   }
 
   @keyframes bounce {

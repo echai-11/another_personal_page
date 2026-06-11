@@ -4,7 +4,15 @@
   import Polaroid from './Polaroid.svelte';
   import Loader from './Loader.svelte';
 
-  const logoFrames = ['/cat_eyes_open.png', '/cat_half_closed.png', '/cat_sleeping.png'];
+  const logoFrames = ['/cat_eyes_open.png', '/cat_half_closed.png', '/cat_sleeping.png'] as const;
+
+  const socialLinks = [
+    { href: 'https://linkedin.com/in/lizziechai11', src: '/linkedin_icon.png', alt: 'LinkedIn',  external: true  },
+    { href: 'https://instagram.com/lizziech41',     src: '/instagram_icon.png', alt: 'Instagram', external: true  },
+    { href: 'https://github.com/echai-11',          src: '/github_icon.png',    alt: 'GitHub',    external: true  },
+    { href: 'mailto:contact@lizziechai.com',        src: '/gmail_icon.png',     alt: 'Email',     external: false },
+  ] as const;
+
   let logoFrame = $state(0);
   let logoInterval: ReturnType<typeof setInterval> | undefined;
   let isBlinking = $state(false);
@@ -53,18 +61,11 @@
 
 <div class="page">
   <div class="social-icons">
-    <a href="https://linkedin.com/in/lizziechai11" target="_blank" rel="noopener noreferrer">
-      <img src="/linkedin_icon.png" alt="LinkedIn">
-    </a>
-    <a href="https://instagram.com/lizziech41" target="_blank" rel="noopener noreferrer">
-      <img src="/instagram_icon.png" alt="Instagram">
-    </a>
-    <a href="https://github.com/echai-11" target="_blank" rel="noopener noreferrer">
-      <img src="/github_icon.png" alt="GitHub">
-    </a>
-    <a href="mailto:contact@lizziechai.com">
-      <img src="/gmail_icon.png" alt="Email">
-    </a>
+    {#each socialLinks as { href, src, alt, external }}
+      <a {href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>
+        <img {src} {alt}>
+      </a>
+    {/each}
   </div>
 
   <div class="logo-section" role="img" aria-label="Lizzie Chai logo" onmouseenter={startBlink} onmouseleave={stopBlink}>
@@ -84,7 +85,7 @@
 </div>
 
 <style>
-:global(body) {
+  :global(body) {
     margin: 0;
     min-height: 100vh;
     background-image: url('/web_background.png');
@@ -169,7 +170,6 @@
     width: 250px;
     height: 250px;
     object-fit: contain;
-    object-position: center center;
     display: block;
   }
 

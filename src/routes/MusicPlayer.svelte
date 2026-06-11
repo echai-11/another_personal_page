@@ -3,6 +3,7 @@
 
   let player: any = null;
   let isPlaying = $state(false);
+  let playerReady = $state(false);
   let currentTime = $state(0);
   let duration = $state(0);
   let progressInterval: ReturnType<typeof setInterval> | undefined;
@@ -22,7 +23,7 @@
           playsinline: 1,
         },
         events: {
-          onReady: (e: any) => { duration = e.target.getDuration(); },
+          onReady: (e: any) => { duration = e.target.getDuration(); playerReady = true; },
           onStateChange: onStateChange,
         },
       });
@@ -105,10 +106,13 @@
     <span class="player-song">look to windward // sleep token</span>
   </div>
   <div class="player-row">
-    <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
+    <button class="play-btn" onclick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'} disabled={!playerReady}>
       <svg width="46" height="46" viewBox="0 0 46 46" fill="none" style="filter:url(#sketchy)">
         <circle cx="23" cy="23" r="19" stroke="#040404" stroke-width="2.2"/>
-        {#if isPlaying}
+        {#if !playerReady}
+          <circle cx="23" cy="23" r="10" stroke="#040404" stroke-width="2.2" stroke-linecap="round"
+            stroke-dasharray="32 20" fill="none" class="spin"/>
+        {:else if isPlaying}
           <rect x="16" y="14" width="5" height="18" rx="1" fill="#040404"/>
           <rect x="25" y="14" width="5" height="18" rx="1" fill="#040404"/>
         {:else}
@@ -190,6 +194,18 @@
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
+  }
+
+  .play-btn:disabled { cursor: default; }
+
+  .spin {
+    transform-origin: 23px 23px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
 
   .scrubber-wrap {
