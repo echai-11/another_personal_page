@@ -7,6 +7,7 @@
     <div
       class="flip-card"
       class:flipped
+      data-gtm-click="polaroid-flip"
       onclick={() => (flipped = !flipped)}
       role="button"
       tabindex="0"
