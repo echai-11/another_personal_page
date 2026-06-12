@@ -85,8 +85,13 @@
     .bottom-text { font-size: 20px; }
   }
 
+   @media (max-width: 865px) {
+    .bottom-text { font-size: 16px; }
+  }
+
+
   @media (max-width: 679px) {
-    :global(body) { overflow-y: auto; overflow-x: auto; }
+    :global(body) { overflow-y: auto; overflow-x: auto; background-size: 200vw auto; }
 
     .page {
       display: flex;
@@ -108,7 +113,6 @@
       right: 5vw;
       order: 5;
       text-align: left;
-      font-size: 16px;
       padding-top: 20px;
       padding-bottom: 10px;
       align-self: end;

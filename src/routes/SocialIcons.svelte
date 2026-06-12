@@ -64,7 +64,7 @@
   }
 
   @media (max-width: 865px) {
-    .social-icons     { left: 10%; top: 16%; }
+    .social-icons     { left: 7%; top: 16%; }
     .social-icons img { width: 75px; height: 75px; }
   }
 

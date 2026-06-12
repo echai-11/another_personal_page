@@ -85,7 +85,7 @@
   }
 
   @media (max-width: 865px) {
-    .polaroid-wrapper         { right: 4%; top: 29%; }
+    .polaroid-wrapper         { right: 7%; top: 29%; }
     .polaroid-photo-container { width: 190px; height: 218px; }
     .polaroid-photo           { width: 226px; }
   }
