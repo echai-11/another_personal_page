@@ -52,13 +52,14 @@
     background-position: top left;
     background-repeat: repeat;
     background-attachment: fixed;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .page {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: max(100vh, 700px);
     overflow: hidden;
   }
 
