@@ -52,13 +52,14 @@
     background-position: top left;
     background-repeat: repeat;
     background-attachment: fixed;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .page {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: max(100vh, 700px);
     overflow: hidden;
   }
 
@@ -81,6 +82,7 @@
 
   .footnote { font-size: 14px; }
 
+  /* Responsive */
   @media (max-width: 1000px) {
     .bottom-text { font-size: 20px; }
   }
@@ -88,7 +90,6 @@
    @media (max-width: 865px) {
     .bottom-text { font-size: 16px; }
   }
-
 
   @media (max-width: 679px) {
     :global(body) { overflow-y: auto; overflow-x: auto; background-size: 200vw auto; }

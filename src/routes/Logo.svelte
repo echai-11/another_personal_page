@@ -96,7 +96,7 @@
   }
 
   @media (max-width: 865px) {
-    .logo-section     { left: 29%; top: 19%; }
+    .logo-section     { left: 33%; top: 19%; }
     .logo-section img { width: 210px; height: 210px; }
     .name-text        { font-size: 23px; }
   }
